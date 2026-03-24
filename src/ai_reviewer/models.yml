@@ -1,0 +1,7 @@
+# Default models per provider.
+# Update these values when a model is deprecated or a newer version is preferred.
+# Users can always override via the 'model' input in action.yml.
+defaults:
+  anthropic: "claude-sonnet-4-6"
+  openai: "gpt-4o"
+  gemini: "gemini-2.0-flash"

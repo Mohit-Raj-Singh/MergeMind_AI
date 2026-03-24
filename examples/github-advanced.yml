@@ -1,0 +1,36 @@
+name: AI Code Review (Advanced)
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+
+    steps:
+      - uses: Mohit-Raj-Singh/MergeMind_AI@v1
+        with:
+          # Provider: anthropic | openai | gemini
+          provider: openai
+          api_key: ${{ secrets.OPENAI_API_KEY }}
+
+          # Optional: override the default model
+          model: gpt-4o
+
+          # Review depth: quick | standard | thorough
+          review_level: thorough
+
+          # Skip generated files, docs, lock files
+          ignore_paths: "*.md,docs/**,**/package-lock.json,**/*.generated.*"
+
+          # Post a top-level summary comment
+          post_summary: true
+
+          # Post inline line-level comments
+          post_inline: true
+
+          # Set to true to only report security issues
+          security_only: false

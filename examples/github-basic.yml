@@ -1,0 +1,17 @@
+name: AI Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+
+    steps:
+      - uses: Mohit-Raj-Singh/MergeMind_AI@v1
+        with:
+          provider: anthropic
+          api_key: ${{ secrets.ANTHROPIC_API_KEY }}

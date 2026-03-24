@@ -1,0 +1,58 @@
+name: 'AI Code Reviewer'
+description: 'AI-powered PR reviews using your own LLM API key (Anthropic, OpenAI, Gemini)'
+author: 'Mohit-Raj-Singh'
+
+branding:
+  icon: 'eye'
+  color: 'purple'
+
+inputs:
+  provider:
+    description: 'LLM provider to use: anthropic | openai | gemini'
+    required: true
+  api_key:
+    description: 'Your LLM API key'
+    required: true
+  model:
+    description: 'Model override (optional). Defaults are defined in src/ai_reviewer/models.yml'
+    required: false
+  review_level:
+    description: 'Review depth: quick | standard | thorough'
+    required: false
+    default: 'standard'
+  ignore_paths:
+    description: 'Comma-separated glob patterns to ignore (e.g. "*.md,docs/**")'
+    required: false
+    default: ''
+  post_summary:
+    description: 'Post a top-level PR summary comment: true | false'
+    required: false
+    default: 'true'
+  post_inline:
+    description: 'Post inline line-level comments: true | false'
+    required: false
+    default: 'true'
+  security_only:
+    description: 'Only report security issues: true | false'
+    required: false
+    default: 'false'
+  github_token:
+    description: 'GitHub token for posting comments (defaults to GITHUB_TOKEN)'
+    required: false
+    default: ${{ github.token }}
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    PROVIDER: ${{ inputs.provider }}
+    API_KEY: ${{ inputs.api_key }}
+    MODEL: ${{ inputs.model }}
+    REVIEW_LEVEL: ${{ inputs.review_level }}
+    IGNORE_PATHS: ${{ inputs.ignore_paths }}
+    POST_SUMMARY: ${{ inputs.post_summary }}
+    POST_INLINE: ${{ inputs.post_inline }}
+    SECURITY_ONLY: ${{ inputs.security_only }}
+    GITHUB_TOKEN: ${{ inputs.github_token }}
+    GITHUB_EVENT_PATH: ${{ github.event_path }}
+    GITHUB_REPOSITORY: ${{ github.repository }}
