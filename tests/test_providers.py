@@ -2,6 +2,7 @@ import json
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
+from anthropic.types import TextBlock
 
 from ai_reviewer.models import ReviewResult, Severity
 from ai_reviewer.providers.anthropic import AnthropicProvider
@@ -32,7 +33,7 @@ async def test_anthropic_provider_parses_result():
         mock_client = MagicMock()
         mock_cls.return_value = mock_client
         mock_client.messages.create = AsyncMock(
-            return_value=MagicMock(content=[MagicMock(text=json.dumps(MOCK_RESULT))])
+            return_value=MagicMock(content=[MagicMock(spec=TextBlock, text=json.dumps(MOCK_RESULT))])
         )
 
         provider = AnthropicProvider(api_key="test-key", model="claude-sonnet-4-20250514")
