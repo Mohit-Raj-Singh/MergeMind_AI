@@ -1,15 +1,18 @@
 import asyncio
 import sys
+
 from .config import Config
-from .providers import get_provider
 from .git.github import GitHubClient
+from .providers import get_provider
 
 
 async def run() -> None:
     config = Config()
 
     print(f"[ai-reviewer] Provider: {config.provider} | Model: {config.resolved_model}")
-    print(f"[ai-reviewer] Review level: {config.review_level} | Security only: {config.security_only}")
+    print(
+        f"[ai-reviewer] Review level: {config.review_level} | Security only: {config.security_only}"
+    )
 
     # 1. Fetch diff from GitHub
     gh = GitHubClient(

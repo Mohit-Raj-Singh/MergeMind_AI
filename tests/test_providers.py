@@ -1,6 +1,8 @@
 import json
-import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
+
+import pytest
+
 from ai_reviewer.models import ReviewResult, Severity
 from ai_reviewer.providers.anthropic import AnthropicProvider
 from ai_reviewer.providers.openai import OpenAIProvider

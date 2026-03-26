@@ -1,9 +1,11 @@
 import fnmatch
 import json
 from pathlib import Path
-from github import Github, Auth
+
+from github import Auth, Github
 from github.PullRequest import PullRequest
-from ..models import ReviewResult, InlineComment, Severity
+
+from ..models import InlineComment, ReviewResult, Severity
 
 
 SEVERITY_EMOJI = {

@@ -1,8 +1,8 @@
 from ..config import Provider
-from .base import LLMProvider
 from .anthropic import AnthropicProvider
-from .openai import OpenAIProvider
+from .base import LLMProvider
 from .gemini import GeminiProvider
+from .openai import OpenAIProvider
 
 
 def get_provider(provider: Provider, api_key: str, model: str) -> LLMProvider:

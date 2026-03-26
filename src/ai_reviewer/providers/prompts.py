@@ -1,4 +1,5 @@
-SYSTEM_PROMPT = """You are an expert code reviewer. Your job is to review a pull request diff and provide:
+SYSTEM_PROMPT = """\
+You are an expert code reviewer. Your job is to review a pull request diff and provide:
 1. Inline comments on specific lines that have issues
 2. An overall summary of the PR
 
@@ -43,7 +44,10 @@ def build_user_prompt(diff: str, review_level: str, security_only: bool) -> str:
     depth = {
         "quick": "Do a quick pass — flag only errors and security issues.",
         "standard": "Do a thorough review covering bugs, security, and important style issues.",
-        "thorough": "Do an exhaustive review of every aspect: correctness, security, performance, style, and maintainability.",
+        "thorough": (
+            "Do an exhaustive review of every aspect: correctness, security, performance,"
+            " style, and maintainability."
+        ),
     }[review_level]
 
     return f"""{depth} {focus}
