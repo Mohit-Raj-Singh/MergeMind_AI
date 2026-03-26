@@ -1,6 +1,7 @@
 import json
 
 import anthropic
+from anthropic.types import TextBlock
 
 from ..models import ReviewResult
 from .base import LLMProvider
@@ -21,5 +22,5 @@ class AnthropicProvider(LLMProvider):
                 {"role": "user", "content": build_user_prompt(diff, review_level, security_only)}
             ],
         )
-        raw = message.content[0].text
+        raw = next(block.text for block in message.content if isinstance(block, TextBlock))
         return ReviewResult.model_validate(json.loads(raw))

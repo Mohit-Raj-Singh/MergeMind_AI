@@ -7,7 +7,7 @@ from .providers import get_provider
 
 
 async def run() -> None:
-    config = Config()
+    config = Config()  # type: ignore[call-arg]
 
     print(f"[ai-reviewer] Provider: {config.provider} | Model: {config.resolved_model}")
     print(

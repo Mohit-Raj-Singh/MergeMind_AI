@@ -45,6 +45,10 @@ select = ["E", "F", "I", "UP"]
 python_version = "3.11"
 strict = true
 
+[[tool.mypy.overrides]]
+module = "google.*"
+ignore_errors = true
+
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["tests"]

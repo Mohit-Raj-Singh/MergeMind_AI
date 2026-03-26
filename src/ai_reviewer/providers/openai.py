@@ -23,4 +23,6 @@ class OpenAIProvider(LLMProvider):
             max_tokens=4096,
         )
         raw = response.choices[0].message.content
+        if raw is None:
+            raise ValueError("OpenAI returned empty response")
         return ReviewResult.model_validate(json.loads(raw))

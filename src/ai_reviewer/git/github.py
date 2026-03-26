@@ -84,5 +84,5 @@ class GitHubClient:
                 commit=commit,
                 body="",
                 event="COMMENT",
-                comments=review_comments,
+                comments=review_comments,  # type: ignore[arg-type]
             )
