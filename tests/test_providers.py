@@ -32,8 +32,9 @@ async def test_anthropic_provider_parses_result():
     with patch("ai_reviewer.providers.anthropic.anthropic.AsyncAnthropic") as mock_cls:
         mock_client = MagicMock()
         mock_cls.return_value = mock_client
+        mock_block = MagicMock(spec=TextBlock, text=json.dumps(MOCK_RESULT))
         mock_client.messages.create = AsyncMock(
-            return_value=MagicMock(content=[MagicMock(spec=TextBlock, text=json.dumps(MOCK_RESULT))])
+            return_value=MagicMock(content=[mock_block])
         )
 
         provider = AnthropicProvider(api_key="test-key", model="claude-sonnet-4-20250514")
