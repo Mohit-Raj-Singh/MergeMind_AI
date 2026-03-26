@@ -9,11 +9,11 @@ from .prompts import SYSTEM_PROMPT, build_user_prompt
 
 class GeminiProvider(LLMProvider):
     def __init__(self, api_key: str, model: str):
-        genai.configure(api_key=api_key)
-        self.model = genai.GenerativeModel(
+        genai.configure(api_key=api_key)  # type: ignore[attr-defined]
+        self.model = genai.GenerativeModel(  # type: ignore[attr-defined]
             model_name=model,
             system_instruction=SYSTEM_PROMPT,
-            generation_config=genai.GenerationConfig(
+            generation_config=genai.GenerationConfig(  # type: ignore[attr-defined]
                 response_mime_type="application/json",
                 max_output_tokens=4096,
             ),
