@@ -7,7 +7,6 @@ from github.PullRequest import PullRequest
 
 from ..models import InlineComment, ReviewResult, Severity
 
-
 SEVERITY_EMOJI = {
     Severity.ERROR: "🔴",
     Severity.SECURITY: "🚨",

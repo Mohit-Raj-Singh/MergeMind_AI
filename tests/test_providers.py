@@ -7,7 +7,6 @@ from ai_reviewer.models import ReviewResult, Severity
 from ai_reviewer.providers.anthropic import AnthropicProvider
 from ai_reviewer.providers.openai import OpenAIProvider
 
-
 MOCK_RESULT = {
     "summary": {
         "overall": "Good PR overall.",
