@@ -24,4 +24,6 @@ class GeminiProvider(LLMProvider):
             contents=build_user_prompt(diff, review_level, security_only),
             config=self.config,
         )
+        if response.text is None:
+            raise ValueError("Gemini returned empty response")
         return ReviewResult.model_validate(json.loads(response.text))
