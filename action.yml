@@ -54,5 +54,3 @@ runs:
     POST_INLINE: ${{ inputs.post_inline }}
     SECURITY_ONLY: ${{ inputs.security_only }}
     GITHUB_TOKEN: ${{ inputs.github_token }}
-    GITHUB_EVENT_PATH: ${{ github.event_path }}
-    GITHUB_REPOSITORY: ${{ github.repository }}
