@@ -26,6 +26,10 @@ async def run() -> None:
         print("[ai-reviewer] No diff found (all files ignored or empty PR). Skipping.")
         return
 
+    if len(diff) > config.max_diff_chars:
+        diff = diff[: config.max_diff_chars]
+        print(f"[ai-reviewer] Diff truncated to {config.max_diff_chars} chars to save tokens")
+
     print(f"[ai-reviewer] Diff size: {len(diff)} chars")
 
     # 2. Run LLM review

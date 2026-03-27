@@ -46,6 +46,7 @@ class Config(BaseSettings):
     post_summary: bool = True
     post_inline: bool = True
     security_only: bool = False
+    max_diff_chars: int = 20000
 
     @property
     def resolved_model(self) -> str:

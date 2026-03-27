@@ -36,6 +36,10 @@ inputs:
     description: 'Only report security issues: true | false'
     required: false
     default: 'false'
+  max_diff_chars:
+    description: 'Max diff size in characters sent to the LLM (default: 20000)'
+    required: false
+    default: '20000'
   github_token:
     description: 'GitHub token for posting comments (defaults to GITHUB_TOKEN)'
     required: false
@@ -54,3 +58,4 @@ runs:
     POST_INLINE: ${{ inputs.post_inline }}
     SECURITY_ONLY: ${{ inputs.security_only }}
     GITHUB_TOKEN: ${{ inputs.github_token }}
+    MAX_DIFF_CHARS: ${{ inputs.max_diff_chars }}
