@@ -34,6 +34,9 @@ Go to your repo → Settings → Secrets → Actions → New repository secret
 
 **2. Create `.github/workflows/ai-review.yml`**
 
+Pick your provider and paste the matching snippet:
+
+**Anthropic (Claude)**
 ```yaml
 name: AI Code Review
 
@@ -52,6 +55,48 @@ jobs:
         with:
           provider: anthropic
           api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+```
+
+**OpenAI (GPT)**
+```yaml
+name: AI Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+
+    steps:
+      - uses: Mohit-Raj-Singh/MergeMind_AI@v1
+        with:
+          provider: openai
+          api_key: ${{ secrets.OPENAI_API_KEY }}
+```
+
+**Google Gemini**
+```yaml
+name: AI Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+
+    steps:
+      - uses: Mohit-Raj-Singh/MergeMind_AI@v1
+        with:
+          provider: gemini
+          api_key: ${{ secrets.GEMINI_API_KEY }}
 ```
 
 That's it. Open a PR and the review will appear automatically.
@@ -185,8 +230,9 @@ pytest
 ### Running locally against a real PR
 
 ```bash
+# Set your chosen provider (anthropic | openai | gemini)
 export PROVIDER=anthropic
-export API_KEY=your-key
+export API_KEY=your-key   # ANTHROPIC_API_KEY / OPENAI_API_KEY / GEMINI_API_KEY
 export GITHUB_TOKEN=your-github-token
 export GITHUB_REPOSITORY=owner/repo
 export GITHUB_EVENT_PATH=/path/to/event.json

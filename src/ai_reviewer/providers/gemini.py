@@ -15,7 +15,7 @@ class GeminiProvider(LLMProvider):
         self.config = genai_types.GenerateContentConfig(
             system_instruction=SYSTEM_PROMPT,
             response_mime_type="application/json",
-            max_output_tokens=4096,
+            max_output_tokens=1024,
         )
 
     async def review(self, diff: str, review_level: str, security_only: bool) -> ReviewResult:

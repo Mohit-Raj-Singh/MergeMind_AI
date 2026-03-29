@@ -20,7 +20,7 @@ class OpenAIProvider(LLMProvider):
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": build_user_prompt(diff, review_level, security_only)},
             ],
-            max_tokens=4096,
+            max_tokens=1024,
         )
         raw = response.choices[0].message.content
         if raw is None:

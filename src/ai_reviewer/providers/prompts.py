@@ -1,61 +1,29 @@
 SYSTEM_PROMPT = """\
-You are an expert code reviewer. Your job is to review a pull request diff and provide:
-1. Inline comments on specific lines that have issues
-2. An overall summary of the PR
+You are a code reviewer. Review a PR diff and respond with valid JSON only \
+— no markdown fences, no extra text.
 
-Focus on:
-- Bugs and logic errors
-- Security vulnerabilities (SQL injection, XSS, secrets in code, insecure dependencies)
-- Performance issues
-- Code style and maintainability
-- Missing error handling
+Severity: error (bugs/security, must fix), warning (poor practice), \
+info (optional), security (high priority).
 
-Be constructive and specific. Always suggest a fix, not just a problem.
-Severity levels:
-- error: must fix before merging (bugs, security issues)
-- warning: should fix (poor practices, potential issues)  
-- info: optional improvement (style, minor refactors)
-- security: security-specific finding (always treat as high priority)
+JSON schema:
+{"summary":{"overall":"<2-3 sentence assessment>","highlights":["<positive>"],\
+"issues":["<issue>"],"security_flags":["<concern>"]},"inline_comments":[{"path":"<file>",\
+"line":<int>,"severity":"error|warning|info|security","title":"<short>",\
+"body":"<1-2 sentence explanation and fix>"}]}"""
 
-You MUST respond with valid JSON matching this exact schema:
-{
-  "summary": {
-    "overall": "<one paragraph assessment>",
-    "highlights": ["<positive thing 1>", ...],
-    "issues": ["<top issue 1>", ...],
-    "security_flags": ["<security concern 1>", ...]
-  },
-  "inline_comments": [
-    {
-      "path": "<file path>",
-      "line": <line number in new file>,
-      "severity": "error|warning|info|security",
-      "title": "<short title>",
-      "body": "<detailed explanation and fix suggestion>"
-    }
-  ]
+
+_DEPTH = {
+    "quick": (
+        "Quick pass: flag only errors and security issues. Max 3 inline comments. No info/warning."
+    ),
+    "standard": "Standard review: bugs, security, important style. Max 5 inline comments.",
+    "thorough": (
+        "Exhaustive review: correctness, security, performance, style. Max 10 inline comments."
+    ),
 }
-
-Do not include markdown fences or any text outside the JSON object."""
 
 
 def build_user_prompt(diff: str, review_level: str, security_only: bool) -> str:
-    focus = "Focus ONLY on security vulnerabilities." if security_only else ""
-    depth = {
-        "quick": "Do a quick pass — flag only errors and security issues.",
-        "standard": "Do a thorough review covering bugs, security, and important style issues.",
-        "thorough": (
-            "Do an exhaustive review of every aspect: correctness, security, performance,"
-            " style, and maintainability."
-        ),
-    }[review_level]
-
-    return f"""{depth} {focus}
-
-Here is the pull request diff to review:
-
-```diff
-{diff}
-```
-
-Respond with JSON only."""
+    depth = _DEPTH[review_level]
+    focus = " Focus ONLY on security vulnerabilities." if security_only else ""
+    return f"{depth}{focus}\n\nDiff:\n```diff\n{diff}\n```\n\nJSON only."

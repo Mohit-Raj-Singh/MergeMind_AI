@@ -16,8 +16,14 @@ class AnthropicProvider(LLMProvider):
     async def review(self, diff: str, review_level: str, security_only: bool) -> ReviewResult:
         message = await self.client.messages.create(
             model=self.model,
-            max_tokens=4096,
-            system=SYSTEM_PROMPT,
+            max_tokens=1024,
+            system=[
+                {
+                    "type": "text",
+                    "text": SYSTEM_PROMPT,
+                    "cache_control": {"type": "ephemeral"},
+                }
+            ],
             messages=[
                 {"role": "user", "content": build_user_prompt(diff, review_level, security_only)}
             ],
