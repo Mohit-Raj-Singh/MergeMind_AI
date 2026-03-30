@@ -49,6 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
+      contents: read
 
     steps:
       - uses: Mohit-Raj-Singh/MergeMind_AI@v1
@@ -70,6 +71,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
+      contents: read
 
     steps:
       - uses: Mohit-Raj-Singh/MergeMind_AI@v1
@@ -91,6 +93,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
+      contents: read
 
     steps:
       - uses: Mohit-Raj-Singh/MergeMind_AI@v1

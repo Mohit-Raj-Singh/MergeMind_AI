@@ -67,7 +67,6 @@ class GitHubClient:
         if not comments:
             return
 
-        commit = self.repo.get_commit(self.pr.head.sha)
         review_comments = []
 
         for c in comments:
@@ -81,7 +80,6 @@ class GitHubClient:
 
         if review_comments:
             self.pr.create_review(
-                commit=commit,
                 body="",
                 event="COMMENT",
                 comments=review_comments,  # type: ignore[arg-type]
